@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticlesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ArticlesController::class,'index']);
 
 Auth::routes();
 
@@ -26,3 +25,6 @@ Route::get('nuevo',function(){
 Route::get('template',function(){
     return view('template');
 });
+Route::resource('articles', ArticlesController::class)->middleware('auth');
+
+

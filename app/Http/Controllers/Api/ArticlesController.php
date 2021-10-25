@@ -1,12 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
 class ArticlesController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     const ERRORREASON = "No se pudo ejecutar el contrato por las siguientes razones : ";
     /**
      * Display a listing of the resource.
@@ -16,7 +23,7 @@ class ArticlesController extends Controller
     public function index()
     {
         $articleAll = Article::all();
-        return view('article.index',compact('articleAll'));
+        return response()->json($articleAll,201);
     }
 
     /**
@@ -42,7 +49,8 @@ class ArticlesController extends Controller
         $passValidation =  $this->validationArticle($request);
         if($passValidation->fails()){
             $errorRegisterFailed = self::ERRORREASON; 
-            return back()->withErrors($passValidation,'contractProccessForm')->with('contractFailed',$errorRegisterFailed)->withInput();
+            return response()->json("Error en alguno de los campos. Vuelva a internar");
+            // return back()->withErrors($passValidation,'contractProccessForm')->with('contractFailed',$errorRegisterFailed)->withInput();
         }        
         Article::create([
             'art_code'=>$request->codeArticle,
@@ -50,8 +58,9 @@ class ArticlesController extends Controller
             'art_quantity'=>$request->quantityArticle,
             'art_categorie'=>$request->categorieArticle
         ]);
-        $status = 'Articulo creado exitosamente';
-        return redirect(route('articles.index'))->with('statusRegisterArticle',$status);
+        // $status = 'Articulo creado exitosamente';
+        return response()->json("Se registro exitosamente. Codigo verifique en http://localhost:8000/api/articlesapi/".$request->codeArticle,201);
+        // return redirect(route('articles.index'))->with('statusRegisterArticle',$status);
 
     }
 
@@ -61,9 +70,15 @@ class ArticlesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($cod)
     {
-        //
+        $article = Article::where('art_code',$cod)->first();
+        if(!is_null($article)){
+            return response()->json($article,201);
+        }else{
+            return response()->json("No se encontro ningun elemento. Verifique el codigo del articulo");
+
+        }
     }
 
     /**
@@ -75,8 +90,7 @@ class ArticlesController extends Controller
     public function edit($id)
     {
         $article = Article::findOrFail($id);
-
-        return view('article.edit',compact('article'));
+        return response()->json($article,201);
     }
 
     /**
@@ -87,7 +101,7 @@ class ArticlesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {   
         $article = Article::findOrFail($id);
         $passValidation =  $this->validationArticleEdit($request);
         if($passValidation->fails()){
@@ -110,14 +124,18 @@ class ArticlesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($cod)
     {
-        $article = Article::findOrFail($id);
-        $name = $article->art_name;
-        $article->delete();
-        $status = 'Borrado exitosamente el articulo '.$name;
-        return redirect(route('articles.index'))->with('statusRegisterArticle',$status);
 
+        $article = Article::where('art_code',$cod)->first();
+        if(!is_null($article)){
+            $article->delete();
+            $code = $article->art_code;
+            return response()->json("Se elimino el articulo con codigo : ".$code,201);
+        }else{
+            return response()->json("No se encontro ningun elemento. Verifique el codigo del articulo");
+
+        }        
     }
 
 
@@ -154,6 +172,5 @@ class ArticlesController extends Controller
         ];
         $validacion = Validator::make($request->all(),$fieldCreate,$messageError);
         return $validacion;        
-    }    
-
+    }  
 }
