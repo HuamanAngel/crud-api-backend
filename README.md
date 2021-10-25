@@ -12,15 +12,11 @@ http://localhost:8000/api/articlesapi // Para almacenar articulo, (POST)
 ##
     Ejemplo
 #
-        Clave                       Valor                                      
-#            
-            codeArticle                 CBAS
-#
-            nameArticle                 Sandalias
-#
-            quantityArticle             12
-#
-            categorieArticle            Zapatos
+        1 Clave                       Valor                                                
+            - codeArticle                 CBAS
+            - nameArticle                 Sandalias
+            - quantityArticle             12
+            - categorieArticle            Zapatos
 
 ##
 http://localhost:8000/api/articlesapi/{art_code} // Para eliminar articulo, (DELETE)
