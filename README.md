@@ -35,7 +35,7 @@
 
     - http://localhost:8000/api/auth/articlesapi  // Todo los articulos (GET)
     - http://localhost:8000/api/auth/articlesapi/{art_code} // Ver solo un articulo (GET)
-    - http://localhost:8000/api/auth/articlesapi // Para almacenar articulo, (POST)
+    
     - http://localhost:8000/api/auth/articlesapi/{art_code} // Para eliminar un articulo, (DELETE)
     - http://localhost:8000/api/auth/articlesapi/{art_code} // Para actualizar articulo, (PUT)
 
@@ -49,13 +49,17 @@
 
     Ojo : {art_code} = Codigo de articulo
 ##
+    - http://localhost:8000/api/auth/articlesapi // Para almacenar articulo, (POST)
     Ejemplo
 #
-        1 Clave                       Valor                                                
-            - codeArticle                 CBAS
-            - nameArticle                 Sandalias
-            - quantityArticle             12
-            - categorieArticle            Zapatos
+    ...
+        {
+            "codeArticle":"CBAS",
+            "nameArticle": "Sandalias",
+            "quantityArticle": 12,
+            "categorieArticle":"Zapatos"
+        } 
+    ...
 
 ##
 http://localhost:8000/api/auth/articlesapi/{art_code} // Para eliminar articulo, (DELETE)

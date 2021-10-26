@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 class ArticlesController extends Controller
 {

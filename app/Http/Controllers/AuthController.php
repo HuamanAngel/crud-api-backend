@@ -6,6 +6,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -13,9 +14,9 @@ class AuthController extends Controller
     {
 
         $request->validate([
-            'name' => 'required|string',
+            'name' => 'required|string|min:4',
             'email' => 'required|string|email|unique:users',
-            'password' => 'required|string'
+            'password' => 'required|string|min:8'
         ]);
 
         User::create([
@@ -23,8 +24,8 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
-
         return response()->json([
+            'res'=>true,
             'message' => 'Usuario creado correctamente!'
         ], 201);
     }
@@ -36,7 +37,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => 'required|string|email',
-            'password' => 'required|string',
+            'password' => 'required|string|min:8',
             'remember_me' => 'boolean'
         ]);
         
@@ -44,7 +45,7 @@ class AuthController extends Controller
 
         if (!Auth::attempt($credentials))
             return response()->json([
-                'message' => 'Unauthorized'
+                'message' => 'Datos erroneos'
             ], 401);
 
         $user = $request->user();
