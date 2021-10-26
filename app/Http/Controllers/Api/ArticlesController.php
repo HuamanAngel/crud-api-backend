@@ -59,7 +59,7 @@ class ArticlesController extends Controller
             'art_categorie'=>$request->categorieArticle
         ]);
         // $status = 'Articulo creado exitosamente';
-        return response()->json("Se registro exitosamente. Codigo verifique en http://localhost:8000/api/articlesapi/".$request->codeArticle,201);
+        return response()->json("Se registro exitosamente.Verifique con el codigo en http://localhost:8000/api/auth/articlesapi/".$request->codeArticle,201);
         // return redirect(route('articles.index'))->with('statusRegisterArticle',$status);
 
     }
@@ -100,13 +100,15 @@ class ArticlesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $code)
     {   
-        $article = Article::findOrFail($id);
+        $article = Article::where('art_code',$code)->first();
         $passValidation =  $this->validationArticleEdit($request);
         if($passValidation->fails()){
             $errorRegisterFailed = self::ERRORREASON; 
-            return back()->withErrors($passValidation,'contractProccessForm')->with('contractFailed',$errorRegisterFailed)->withInput();
+            return response()->json("No se pudo editar ese articulo");
+
+            // return back()->withErrors($passValidation,'contractProccessForm')->with('contractFailed',$errorRegisterFailed)->withInput();
         }            
         $article->update(
             [
@@ -115,7 +117,9 @@ class ArticlesController extends Controller
             ]
         );
         $status = 'Articulo actualizado exitosamente';
-        return redirect(route('articles.edit',$article->id))->with('updateArticle',$status);
+        return response()->json("El articulo fue editado correctametne");
+
+        // return redirect(route('articles.edit',$article->id))->with('updateArticle',$status);
     }
 
     /**
