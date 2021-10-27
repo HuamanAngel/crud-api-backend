@@ -3,7 +3,9 @@
 ##### Servidor que contiene la API, para consumir la API ir al repositorio https://github.com/HuamanAngel/crud-consumidor , mantener encendido este servidor en el puerto localhost:8000, y el consumidor localhost:8001
 
     ...
-        Levantar el servidor con puerto 8000
+        --> php artisan migrate
+        --> php artisan serve --port=8000
+        No es necesario usar npm install ya que los recursos estan en la carpeta "public"
 
     ...
 ## Consumir API autenticado 
