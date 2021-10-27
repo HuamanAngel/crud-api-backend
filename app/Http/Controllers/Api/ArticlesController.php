@@ -53,12 +53,10 @@ class ArticlesController extends Controller
             'art_quantity'=>$request->quantityArticle,
             'art_categorie'=>$request->categorieArticle
         ]);
-        // $status = 'Articulo creado exitosamente';
         return response()->json([
             'res'=>true,
             'msg'=>"Se registro exitosamente.Verifique con el codigo en http://localhost:8000/api/auth/articlesapi/".$request->codeArticle
             ]);
-        // return redirect(route('articles.index'))->with('statusRegisterArticle',$status);
 
     }
 
@@ -105,8 +103,6 @@ class ArticlesController extends Controller
         if($passValidation->fails()){
             $errorRegisterFailed = self::ERRORREASON; 
             return response()->json("No se pudo editar ese articulo");
-
-            // return back()->withErrors($passValidation,'contractProccessForm')->with('contractFailed',$errorRegisterFailed)->withInput();
         }            
         $article->update(
             [
@@ -117,7 +113,6 @@ class ArticlesController extends Controller
         $status = 'Articulo actualizado exitosamente';
         return response()->json("El articulo fue editado correctametne");
 
-        // return redirect(route('articles.edit',$article->id))->with('updateArticle',$status);
     }
 
     /**
@@ -144,20 +139,7 @@ class ArticlesController extends Controller
     // Funciones adicionales
 
     public function validationArticle(Request $request){
-        // $fieldCreate= [
-        //     'codeArticle'=>'required|string|min:0|unique:articles,art_code',
-        //     'nameArticle'=>'required|string|min:0',
-        //     'quantityArticle'=>'required|integer|between:0,1000',
 
-        // ];
-        // $messageError=[
-        //     'required' =>'Este campo ":attribute" es obligatorio',
-        //     'integer'=>'":attribute" Debe ser numero entero',
-        //     'between:0,1000'=>'":attribute" Fuera del rango',
-        //     'string'=>'":attribute" Debe ser texto',
-        // ];
-        // $validacion = Validator::make($request->all(),$fieldCreate,$messageError);
-        // return $validacion;        
     }
 
     public function validationArticleEdit(Request $request){
