@@ -1,7 +1,11 @@
 
-##### Usando la misma interfaz de la pagina se puede hacer las acciones
-##### Se creo una interfaz para consumir la API
+##### CRUD SIMPLE INTEGRADO, solo correr la aplicacion y probar el crud
+##### Servidor que contiene la API, para consumir la API ir al repositorio https://github.com/HuamanAngel/crud-consumidor , mantener encendido este servidor en el puerto localhost:8000, y el consumidor localhost:8001
 
+    ...
+        Levantar el servidor con puerto 8000
+
+    ...
 ## Consumir API autenticado 
 
 ### Rutas sin autorizacion (Publicas)

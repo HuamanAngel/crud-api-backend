@@ -12,7 +12,6 @@ class AuthController extends Controller
 {
     public function signUp(Request $request)
     {
-
         $request->validate([
             'name' => 'required|string|min:4',
             'email' => 'required|string|email|unique:users',
@@ -69,7 +68,6 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-
         return response()->json([
             'message' => 'Fuera de la session correctamente, token a sido revocado'
         ]);
